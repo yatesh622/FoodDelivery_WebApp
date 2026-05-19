@@ -93,10 +93,14 @@ if not st.session_state.logged_in:
 
 @st.cache_data
 def load_data():
-    users_df = pd.read_csv("USERS_CLEAN.csv")
-    restaurant_df = pd.read_csv("RESTAURANT_CLEAN.csv")
-    menu_df = pd.read_csv("MENU_CLEAN.csv")
-    food_df = pd.read_csv("FOOD_CLEAN.csv")
+    users_df = pd.read_csv("USERS_CLEAN.csv",low_memory=False)
+    restaurant_df = pd.read_csv("RESTAURANT_CLEAN.csv",low_memory=False)
+    menu_df = pd.read_csv(
+        "MENU_CLEAN.csv",
+        usecols=["MENU_ID", "R_ID", "F_ID", "CUISINE", "PRICE", "PRICE_RANGE"],
+        low_memory=False
+    )
+    food_df = pd.read_csv("FOOD_CLEAN.csv",low_memory=False)
 
     # Auto-detect real header row in ORDERS file
     with open("ORDERS_CLEAN.csv", "r", encoding="utf-8", errors="ignore") as file:
