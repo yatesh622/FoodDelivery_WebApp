@@ -131,6 +131,7 @@ def load_data():
     orders_df["R_ID"] = pd.to_numeric(orders_df["R_ID"], errors="coerce")
 
     orders_df = orders_df.dropna(subset=["ORDER_ID", "SALES_AMOUNT", "USER_ID", "R_ID"])
+    orders_df = orders_df.drop_duplicates(subset=["ORDER_ID"])
 
     return users_df, orders_df, restaurant_df, menu_df, food_df
 
