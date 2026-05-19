@@ -185,6 +185,7 @@ menu_full_df = menu_food_df.merge(
     right_on="ID",
     how="left"
 )
+menu_full_df.rename(columns={"CUISINE_x": "CUISINE"}, inplace=True)
 
 st.sidebar.title("🍽️ Food Delivery Analytics")
 st.sidebar.markdown("---")
