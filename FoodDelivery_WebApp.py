@@ -103,7 +103,11 @@ def load_data():
 
     return users_df, orders_df, restaurant_df, menu_df, food_df
 
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> c23f7727d420be735003b83575a637b0425b072e
 @st.cache_resource
 def load_model_files():
     model = joblib.load("logistic_high_revenue_model.pkl")
@@ -369,7 +373,11 @@ with tab2:
         title="Revenue Trend Over Time"
     )
 
+<<<<<<< HEAD
     col1.plotly_chart(fig1, width="stretch")
+=======
+    col1.plotly_chart(fig1, use_container_width=True)
+>>>>>>> c23f7727d420be735003b83575a637b0425b072e
     col1.info("Insight: Revenue trend helps identify growth, decline, and seasonal movement across selected filters.")
 
     top_restaurants_revenue = (
@@ -390,7 +398,11 @@ with tab2:
     )
     fig2.update_layout(yaxis={"categoryorder": "total ascending"})
 
+<<<<<<< HEAD
     col2.plotly_chart(fig2, width="stretch")
+=======
+    col2.plotly_chart(fig2, use_container_width=True)
+>>>>>>> c23f7727d420be735003b83575a637b0425b072e
     col2.info("Insight: A smaller group of restaurants contributes significantly to total revenue.")
 
     col3, col4 = st.columns(2)
@@ -413,7 +425,11 @@ with tab2:
     )
     fig3.update_layout(yaxis={"categoryorder": "total ascending"})
 
+<<<<<<< HEAD
     col3.plotly_chart(fig3, width="stretch")
+=======
+    col3.plotly_chart(fig3, use_container_width=True)
+>>>>>>> c23f7727d420be735003b83575a637b0425b072e
     col3.info("Insight: City-level revenue highlights the strongest food delivery markets.")
 
     cuisine_revenue = (
@@ -432,7 +448,11 @@ with tab2:
         title="Revenue Contribution by Cuisine"
     )
 
+<<<<<<< HEAD
     col4.plotly_chart(fig4, width="stretch")
+=======
+    col4.plotly_chart(fig4, use_container_width=True)
+>>>>>>> c23f7727d420be735003b83575a637b0425b072e
     col4.info("Insight: Cuisine contribution shows which food categories drive the highest sales.")
 
     st.divider()
@@ -456,7 +476,11 @@ with tab2:
         text_auto=".2s"
     )
 
+<<<<<<< HEAD
     col5.plotly_chart(fig5, width="stretch")
+=======
+    col5.plotly_chart(fig5, use_container_width=True)
+>>>>>>> c23f7727d420be735003b83575a637b0425b072e
     col5.info("Insight: Age group distribution identifies the strongest ordering customer segment.")
 
     top_restaurants_orders = (
@@ -477,7 +501,11 @@ with tab2:
     )
     fig6.update_layout(yaxis={"categoryorder": "total ascending"})
 
+<<<<<<< HEAD
     col6.plotly_chart(fig6, width="stretch")
+=======
+    col6.plotly_chart(fig6, use_container_width=True)
+>>>>>>> c23f7727d420be735003b83575a637b0425b072e
     col6.info("Insight: Restaurants with high order volume show strong customer demand and operational performance.")
 
     col7, col8 = st.columns(2)
