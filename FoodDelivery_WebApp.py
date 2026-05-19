@@ -94,19 +94,43 @@ if not st.session_state.logged_in:
 @st.cache_data
 def load_data():
     users_df = pd.read_csv("USERS_CLEAN.csv")
-    orders_df = pd.read_csv("ORDERS_CLEAN.csv", skiprows=1, low_memory=False)
     restaurant_df = pd.read_csv("RESTAURANT_CLEAN.csv")
     menu_df = pd.read_csv("MENU_CLEAN.csv")
     food_df = pd.read_csv("FOOD_CLEAN.csv")
 
-    orders_df = orders_df[orders_df["ORDER_ID"] != "ORDER_ID"]
+    # Auto-detect real header row in ORDERS file
+    with open("ORDERS_CLEAN.csv", "r", encoding="utf-8", errors="ignore") as file:
+        lines = file.readlines()
 
+    header_row = 0
+    for i, line in enumerate(lines):
+        if line.startswith("ORDER_ID"):
+            header_row = i
+            break
+
+    orders_df = pd.read_csv(
+        "ORDERS_CLEAN.csv",
+        skiprows=header_row,
+        low_memory=False
+    )
+
+    orders_df.columns = orders_df.columns.str.strip().str.upper()
+
+    # Remove repeated header/conflict rows if present
+    orders_df = orders_df[orders_df["ORDER_ID"].astype(str) != "ORDER_ID"]
+    orders_df = orders_df[~orders_df["ORDER_ID"].astype(str).str.contains("<<<<<<<|=======|>>>>>>>", regex=True, na=False)]
+
+    # Convert required numeric/date columns
     orders_df["ORDER_DATE"] = pd.to_datetime(orders_df["ORDER_DATE"], errors="coerce")
     orders_df["SALES_AMOUNT"] = pd.to_numeric(orders_df["SALES_AMOUNT"], errors="coerce")
     orders_df["SALES_QTY"] = pd.to_numeric(orders_df["SALES_QTY"], errors="coerce")
     orders_df["ORDER_YEAR"] = pd.to_numeric(orders_df["ORDER_YEAR"], errors="coerce")
     orders_df["ORDER_MONTH"] = pd.to_numeric(orders_df["ORDER_MONTH"], errors="coerce")
     orders_df["WEEKEND_FLAG"] = pd.to_numeric(orders_df["WEEKEND_FLAG"], errors="coerce")
+    orders_df["USER_ID"] = pd.to_numeric(orders_df["USER_ID"], errors="coerce")
+    orders_df["R_ID"] = pd.to_numeric(orders_df["R_ID"], errors="coerce")
+
+    orders_df = orders_df.dropna(subset=["ORDER_ID", "SALES_AMOUNT", "USER_ID", "R_ID"])
 
     return users_df, orders_df, restaurant_df, menu_df, food_df
 
