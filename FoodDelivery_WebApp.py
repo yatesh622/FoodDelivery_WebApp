@@ -94,12 +94,19 @@ if not st.session_state.logged_in:
 @st.cache_data
 def load_data():
     users_df = pd.read_csv("USERS_CLEAN.csv")
-    orders_df = pd.read_csv("ORDERS_CLEAN.csv")
+    orders_df = pd.read_csv("ORDERS_CLEAN.csv", skiprows=1, low_memory=False)
     restaurant_df = pd.read_csv("RESTAURANT_CLEAN.csv")
     menu_df = pd.read_csv("MENU_CLEAN.csv")
     food_df = pd.read_csv("FOOD_CLEAN.csv")
 
+    orders_df = orders_df[orders_df["ORDER_ID"] != "ORDER_ID"]
+
     orders_df["ORDER_DATE"] = pd.to_datetime(orders_df["ORDER_DATE"], errors="coerce")
+    orders_df["SALES_AMOUNT"] = pd.to_numeric(orders_df["SALES_AMOUNT"], errors="coerce")
+    orders_df["SALES_QTY"] = pd.to_numeric(orders_df["SALES_QTY"], errors="coerce")
+    orders_df["ORDER_YEAR"] = pd.to_numeric(orders_df["ORDER_YEAR"], errors="coerce")
+    orders_df["ORDER_MONTH"] = pd.to_numeric(orders_df["ORDER_MONTH"], errors="coerce")
+    orders_df["WEEKEND_FLAG"] = pd.to_numeric(orders_df["WEEKEND_FLAG"], errors="coerce")
 
     return users_df, orders_df, restaurant_df, menu_df, food_df
 
